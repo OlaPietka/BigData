@@ -1,5 +1,6 @@
 # BigData
 Repository for educational purposes. 
+
 Autrhors:
 * Ola Piętka
 * Robert Deyk
