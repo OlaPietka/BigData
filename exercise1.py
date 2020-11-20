@@ -1,3 +1,8 @@
+# Program zlicza ilość wszystkich słów w każdej książce Shakespeare'a.
+# Autorzy:
+# Ola Piętka
+# Robert Deyk
+
 import requests
 import zipfile
 import os
