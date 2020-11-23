@@ -25,6 +25,16 @@ def create_dir(dir_name):
         os.makedirs(dir_name)
 
 
+def count_words(file):
+    with open(file, 'r') as artwork:
+        data = artwork.readlines()  # read lines
+        data = data[8:]  # remove first 7 line
+        data = ''.join(data)  # convert to string
+
+        words = [word for word in data.split() if '=' not in word]  # get list of all words without "="
+    return len(words)
+
+
 txt_dir_path = "shakespeare-txt/"
 zip_dir_path = "shakespeare-zip/"
 zip_path = zip_dir_path + "artwork.zip"
@@ -36,16 +46,8 @@ create_dir(txt_dir_path)
 download_url(zip_url, zip_path)
 unzip(zip_path, txt_dir_path)
 
-sum = 0
-for file in os.listdir(txt_dir_path):
-    if file.endswith(".txt"):
-        file_path = os.path.join(txt_dir_path, file)
-        with open(file_path, 'r') as artwork:
-            data = artwork.readlines()  # read lines
-            data = data[8:]  # remove first 7 line
-            data = ''.join(data)  # convert to string
+files = filter(lambda file: file.endswith(".txt"), os.listdir(txt_dir_path))  # filter all files with txt extension
 
-            words = [word for word in data.split() if '=' not in word]  # get list of all words without "="
-            sum += len(words)  # add length of the list
+words_count = [count_words(txt_dir_path + file) for file in files]  # count words in all books
 
-print("Sum of all words:", sum)
+print("Sum of all words:", sum(words_count))
