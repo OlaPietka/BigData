@@ -1,3 +1,8 @@
+# Program szuka najczęsciej używanych słów i rzeczowników przez Mark'a Twain'a.
+# Autorzy:
+# Ola Piętka
+# Robert Deyk
+
 import os
 import PyPDF2
 import requests
