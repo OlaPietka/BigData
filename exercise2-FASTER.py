@@ -44,7 +44,7 @@ class BookWebScraper(MessageManager):
 
         self.create_dir(dir)
 
-        self.links = self.get_links()[:3]
+        self.links = self.get_links()[:1]
         self.words = self.get_all_words()
 
         self.words_occ = self.count_occurrence(self.words)
@@ -85,8 +85,8 @@ class BookWebScraper(MessageManager):
 
         text = ""
         for i, book in enumerate(self.links):
+            self.status_message(i, len(self.links), "text extracted")
             text += self.extract_text(book)
-            self.status_message(i+1, len(self.links), "text extracted")
 
         return self.filter_words(text.split())
 
@@ -133,8 +133,12 @@ class BookWebScraper(MessageManager):
         def to_alphanum(words):
             return list(map(lambda x: ''.join(e for e in x if e.isalnum()), words))
 
+        def del_empty(words):
+            return list(filter(lambda x: x != '', words))
+
         words = to_lower(words)
         words = to_alphanum(words)
+        words = del_empty(words)
 
         return words
 
@@ -152,4 +156,5 @@ twain_url = "https://freeclassicebooks.com/Mark%20Twain.htm"
 twain_dir = "twain-mht/"
 
 twain = BookWebScraper(twain_url, twain_dir)
+
 twain.print_inf()
