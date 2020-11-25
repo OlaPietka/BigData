@@ -78,7 +78,7 @@ class BookWebScraper(MessageManager):
         spans = div.find_all('span')
 
         text = [str(text) for span in spans for text in span.text if is_text(text)]
-        return ' '.join(text)
+        return ''.join(text)
 
     def get_all_words(self):
         self.info_message("extracting words")
