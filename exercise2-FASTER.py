@@ -1,4 +1,4 @@
-# Program zlicza ilość wszystkich słów w każdej książce Shakespeare'a.
+# Program szuka najczęsciej używanych słów i rzeczowników przez Mark'a Twain'a.
 # Autorzy:
 # Ola Piętka
 # Robert Deyk
