@@ -4,14 +4,12 @@
 # Robert Deyk
 
 import os
-import sys
+from collections import Counter
 
-import PyPDF2
+import nltk
 import requests
 from bs4 import BeautifulSoup
-from collections import Counter
 from nltk.corpus import wordnet as wn
-import nltk
 
 
 class MessageManager:
@@ -38,13 +36,10 @@ class MessageManager:
 
 
 class BookWebScraper(MessageManager):
-    def __init__(self, author_url, dir):
+    def __init__(self, author_url):
         self.author_url = author_url
-        self.dir = dir
 
-        self.create_dir(dir)
-
-        self.links = self.get_links()[:1]
+        self.links = self.get_links()
         self.words = self.get_all_words()
 
         self.words_occ = self.count_occurrence(self.words)
@@ -96,7 +91,7 @@ class BookWebScraper(MessageManager):
 
     def top_words(self, top=10):
         self.info_message("getting top words")
-        return self.words_occ[:top+1]
+        return self.words_occ[:top]
 
     def top_nouns(self, top=3):
         def get_nouns():
@@ -153,8 +148,7 @@ class BookWebScraper(MessageManager):
 
 
 twain_url = "https://freeclassicebooks.com/Mark%20Twain.htm"
-twain_dir = "twain-mht/"
 
-twain = BookWebScraper(twain_url, twain_dir)
+twain = BookWebScraper(twain_url)
 
 twain.print_inf()
