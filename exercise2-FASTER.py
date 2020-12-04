@@ -4,6 +4,7 @@
 # Robert Deyk
 
 import os
+import re
 from collections import Counter
 
 import nltk
