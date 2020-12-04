@@ -66,13 +66,13 @@ class BookWebScraper(MessageManager):
             dic = "<>&/"
             return not any(d in str(text) for d in dic)
 
-        file_content = file_content(file)
+        file_content1 = file_content(file)
 
-        parsed_html = BeautifulSoup(file_content, features="html.parser")
+        parsed_html = BeautifulSoup(file_content1, features="html.parser")
         div = parsed_html.find("div")
-        spans = div.find_all('span')
+        spans = div.find_all('a')
 
-        text = [str(text) for span in spans for text in span.text if is_text(text)]
+        text = [re.sub(r'[^A-Za-z0-9 ]+', '', str(span.text).lower()) for span in spans if is_text(span.text)]
         return ''.join(text)
 
     def get_all_words(self):
@@ -96,6 +96,7 @@ class BookWebScraper(MessageManager):
     def top_nouns(self, top=3):
         def get_nouns():
             self.info_message("downloading nouns")
+            nltk.download('wordnet')
             nltk.download('brown')
             nltk.download('punkt')
             nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
@@ -122,29 +123,11 @@ class BookWebScraper(MessageManager):
     # Filter list of words
     @staticmethod
     def filter_words(words):
-        def to_lower(words):
-            return list(map(lambda x: x.lower(), words))
-
-        def to_alphanum(words):
-            return list(map(lambda x: ''.join(e for e in x if e.isalnum()), words))
-
-        def del_empty(words):
-            return list(filter(lambda x: x != '', words))
-
-        words = to_lower(words)
-        words = to_alphanum(words)
-        words = del_empty(words)
-
-        return words
+        return list(filter(lambda word: word.isalnum() and word != '', words))
 
     @staticmethod
     def count_occurrence(list):
         return Counter(list).most_common()
-
-    @staticmethod
-    def create_dir(dir_name):
-        if not os.path.exists(dir_name):
-            os.makedirs(dir_name)
 
 
 twain_url = "https://freeclassicebooks.com/Mark%20Twain.htm"
