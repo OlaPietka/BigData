@@ -36,8 +36,9 @@ class MessageManager:
 
 
 class BookWebScraper(MessageManager):
-    def __init__(self, author_url):
+    def __init__(self, author_url, tag="span"):
         self.author_url = author_url
+        self.tag = tag
 
         self.links = self.get_links()
         self.words = self.get_all_words()
@@ -70,9 +71,9 @@ class BookWebScraper(MessageManager):
 
         parsed_html = BeautifulSoup(file_content1, features="html.parser")
         div = parsed_html.find("div")
-        spans = div.find_all('a')
+        tags = div.find_all(self.tag)
 
-        text = [re.sub(r'[^A-Za-z0-9 ]+', '', str(span.text).lower()) for span in spans if is_text(span.text)]
+        text = [re.sub(r'[^A-Za-z0-9 ]+', '', str(tag.text).lower()) for tag in tags if is_text(tag.text)]
         return ''.join(text)
 
     def get_all_words(self):
@@ -131,7 +132,10 @@ class BookWebScraper(MessageManager):
 
 
 twain_url = "https://freeclassicebooks.com/Mark%20Twain.htm"
+shakespeare_url = "https://freeclassicebooks.com/william_shakespeare.htm"
 
-twain = BookWebScraper(twain_url)
+twain = BookWebScraper(twain_url, tag='span')
+shakespeare = BookWebScraper(twain_url, tag='a')
 
 twain.print_inf()
+shakespeare.print_inf()
