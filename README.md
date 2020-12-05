@@ -14,7 +14,9 @@ Count the occurrence of words and nouns in all Mark Twain artworks
 ## Exercise 3 - Web scraper Shakespeare + Mark Twain with Hadoop
 Count the occurrence of words and nouns in all Mark Twain and Shakespeare artworks using Hadoop technology.
 
-UPDATE: Due to few errors, exercise was canceled. 
+UPDATE: Due to few errors, exercise was canceled.
+
+"Job" was always in ACCEPTED state and couldn't run:
 ![](https://i.imgur.com/BsdPpAR.png)
 ![](https://i.imgur.com/pg1X9xW.png)
 
