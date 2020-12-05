@@ -1,12 +1,11 @@
-# Program szuka najczęsciej używanych słów i rzeczowników przez Mark'a Twain'a.
+# Program zlicza ilość wszystkich słów w każdej książce Shakespeare'a.
 # Autorzy:
 # Ola Piętka
 # Robert Deyk
 
-import os
 import re
 from collections import Counter
-
+from timeit import default_timer as time
 import nltk
 import requests
 from bs4 import BeautifulSoup
@@ -35,6 +34,10 @@ class MessageManager:
             print("{}. {} - {}".format(i, key, value))
         print("----------")
 
+    @staticmethod
+    def time_message(time, func):
+        print("{}: {} seconds".format(func, round(time, 2)))
+
 
 class BookWebScraper(MessageManager):
     def __init__(self, author_url, tag="span"):
@@ -42,12 +45,26 @@ class BookWebScraper(MessageManager):
         self.tag = tag
 
         self.links = self.get_links()
-        self.words = self.get_all_words()
 
+        t0 = time()
+        self.words = self.get_all_words()
+        self.time_message(time() - t0, "get_all_words")
+
+        t0 = time()
         self.words_occ = self.count_occurrence(self.words)
+        self.time_message(time() - t0, "count_occurrence")
+
+        t0 = time()
         self.words_num = self.count_words()
+        self.time_message(time() - t0, "count_words")
+
+        t0 = time()
         self.top_words = self.top_words()
+        self.time_message(time() - t0, "top_words")
+
+        t0 = time()
         self.top_nouns = self.top_nouns()
+        self.time_message(time() - t0, "top_nouns")
 
     # Get downloadable links for all listed books
     def get_links(self):
@@ -85,7 +102,7 @@ class BookWebScraper(MessageManager):
             self.status_message(i, len(self.links), "text extracted")
             text += self.extract_text(book)
 
-        return self.filter_words(text.split())
+        return text.split()
 
     def count_words(self):
         self.info_message("counting words")
@@ -122,11 +139,6 @@ class BookWebScraper(MessageManager):
         self.occurrence_message(self.top_words, "words")
         self.occurrence_message(self.top_nouns, "nouns")
 
-    # Filter list of words
-    @staticmethod
-    def filter_words(words):
-        return list(filter(lambda word: word.isalnum() and word != '', words))
-
     @staticmethod
     def count_occurrence(list):
         return Counter(list).most_common()
@@ -135,8 +147,10 @@ class BookWebScraper(MessageManager):
 twain_url = "https://freeclassicebooks.com/Mark%20Twain.htm"
 shakespeare_url = "https://freeclassicebooks.com/william_shakespeare.htm"
 
+start_time = time()
 twain = BookWebScraper(twain_url, tag='span')
-shakespeare = BookWebScraper(twain_url, tag='a')
+shakespeare = BookWebScraper(shakespeare_url, tag='a')
+print("all: %s seconds" % (time() - start_time))
 
 twain.print_inf()
 shakespeare.print_inf()
