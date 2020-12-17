@@ -36,3 +36,12 @@ Analysis of situation in all state in USA, using public data about Covid19
 ![](https://i.imgur.com/R1LEQaL.png)
 ![](https://i.imgur.com/f5eOvHX.png)
 
+## Exercise 6 - Movie recomender
+Movie recomender based on euclidean distance and collected data
+
+Recomendation for Paweł C.:
+![](https://i.imgur.com/nJPKRLd.png)
+Recomendation for Ola P.:
+![](https://i.imgur.com/qEagzHC.png)
+Recomendation for Robert D.:
+![](https://i.imgur.com/X3KfMSh.png)
