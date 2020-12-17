@@ -22,3 +22,17 @@ UPDATE: Due to few errors, exercise was canceled.
 
 ## Exercise 4 - Web scraper Shakespeare + Mark Twain with Spark
 Count the occurrence of words and nouns in all Mark Twain and Shakespeare artworks using Spark technology.
+
+## Exercise 5 - Web scraper Mark Twain and Covid19 analysis in USA with Spark
+### Exercise 5-1
+Exercise 4 extended by words categorization (by lenght) and language detection (based on letters occurrence)
+
+![](https://i.imgur.com/QyOPTXW.png)
+![](https://i.imgur.com/MWew40f.png)
+![](https://i.imgur.com/OoHiJMw.png)
+### Exercise 5-2
+Analysis of situation in all state in USA, using public data about Covid19
+
+![](https://i.imgur.com/R1LEQaL.png)
+![](https://i.imgur.com/f5eOvHX.png)
+
