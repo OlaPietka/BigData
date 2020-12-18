@@ -160,14 +160,14 @@ class Recommendations:
         Returns:
             String name of best matching user
         """
-        def get_users():
+        def get_users_expect(user):
             """
             Get all users in data, expect input user
             Returns:
                 List of all users
             """
-            return [u[0] for u in self.data.groupBy("Osoba").count().select("Osoba").collect() if u[0] != input_user]
-        users = get_users()
+            return [u[0] for u in self.data.groupBy("Osoba").count().select("Osoba").collect() if u[0] != user]
+        users = get_users_expect(input_user)
 
         scores = {user: self.compute(user, input_user) for user in users}
 
